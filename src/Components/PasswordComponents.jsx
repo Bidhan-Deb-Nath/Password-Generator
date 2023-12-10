@@ -10,7 +10,8 @@ const PasswordComponent = () => {
   const passwordRef = useRef(null);
 
   const generatePassword = useCallback(() => {
-    let pass = "";
+    let generate = "";
+
     let strings = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     let numbers = "0123456789";
     let specialCharacters = "!@^#(/]$+-%^}&*)={[";
@@ -19,19 +20,22 @@ const PasswordComponent = () => {
     if (characterAllowed) strings += specialCharacters;
 
     for (let i = 0; i <= length; i++) {
-      const char = Math.floor(Math.random() * strings.length + 1);
-      pass += strings.charAt(char);
+      const character = Math.floor(Math.random() * strings.length + 1);
+      generate += strings.charAt(character);
     }
-    setPassword(pass);
+    setPassword(generate);
   }, [length, numberAllowed, characterAllowed, setPassword]);
+
   useEffect(() => {
     generatePassword();
   }, [length, numberAllowed, characterAllowed, generatePassword]);
+
   const copyPasswordClipBord = useCallback(() => {
     passwordRef.current?.select();
     passwordRef.current?.setSelectionRange(0, 12);
     window.navigator.clipboard.writeText(password);
   }, [password]);
+
   return (
     <>
       <div className="w-full max-w-md  mx-auto shadow-md rounded-lg px-4 py-3 my-8 text-orange-500 bg-gray-600">
